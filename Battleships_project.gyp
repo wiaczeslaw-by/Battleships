@@ -8,7 +8,29 @@ def main():
     field_size() 
 
 def choose_game_mode():
-    pass   
+    correct_data = False
+    while correct_data == False:
+        game_mode = input("""Select a game option
+                1. Player vs Player
+                2. Player vs Computer (level easy)
+                3. Player vs AI (level medium)
+                """))
+        correct_data = state_input(game_mode)  
+    return game_mode   
+
+def state_input(user_input):
+    if user_input == "1" or user_input == "2" or user_input == "3":
+        return True
+    else :     
+        if len(user_input) != 1:
+            print("Too many characters")                       
+        else:
+            print("The sign entered is out of range or not a digit")                
+        print("""
+            Try again
+            """)
+        return False
+   
 
 def board_size():
     board = []
@@ -22,11 +44,9 @@ def board_size():
                 board.append(["O"]*5)
         if userinput == '3':
             for i in range():
-                                 
-
-
+                pass                                
 def fields_output():
-    return 
+    pass
 
 def change_player():
     pass
@@ -45,3 +65,4 @@ def random_place_ships():
 
 if __name__ == "__main__":
     main()
+    choose_game_mode()
