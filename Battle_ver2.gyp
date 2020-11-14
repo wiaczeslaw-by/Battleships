@@ -31,11 +31,11 @@ def choose_game_mode():
         time.sleep(1)
         choose_game_mode()
 
-def board_size(board):                            # function for choosing board size and ship_set according to it
+def board_size(board):                                   #function for choosing board size and ship_set according to it
     os.system("cls || clear")  
     userinput = input("Please, choose board size:\n 1 - small (5*5)\n 2 - regular (10*10)\n 3 - big (15*15)")
     if userinput == '1':  
-        for row in range(0, 5):                           #quantity os "S" = 3
+        for row in range(0, 5):                         #quantity os "S" = 3
             board.append(['O'] * 5)
         for ship in range(3):
             chosen_set_of_ships.append(ship_sets[0])
@@ -99,7 +99,7 @@ def random_ship_placement():
         print_board(board)
         return board
 
-def mark_nearest_cell(board, random_row, random_column):
+def check_nearest_ship(board, random_row, random_column):
     try:
         board[random_row-1][random_column-1] = 'o'
         board[random_row-1][random_column] = 'o'
