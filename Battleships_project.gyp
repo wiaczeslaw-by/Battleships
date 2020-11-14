@@ -21,7 +21,6 @@ def main():
     print_board(board) 
 
 def choose_game_mode():
-<<<<<<< HEAD
     user_game_mode = input("Please, choose game mode:\n 1 - Player vs Player\n 2 - Player vs Comp ")
     if user_game_mode == '1':
         player = 1
@@ -148,46 +147,6 @@ def game_vs_player():
     pass
 
 def game_vs_computer():
-=======
-    correct_data = False
-    while correct_data == False:
-        game_mode = input("""Select a game option
-                1. Player vs Player
-                2. Player vs Computer (level easy)
-                3. Player vs AI (level medium)
-                """))
-        correct_data = state_input(game_mode)  
-    return game_mode   
-
-def state_input(user_input):
-    if user_input == "1" or user_input == "2" or user_input == "3":
-        return True
-    else :     
-        if len(user_input) != 1:
-            print("Too many characters")                       
-        else:
-            print("The sign entered is out of range or not a digit")                
-        print("""
-            Try again
-            """)
-        return False
-   
-
-def board_size():
-    board = []
-    userinput = input("Please, choose field size:\n 1 - small\n 2 - standart\n 3 - big ")
-    while userinput != 1 or userinput != 2 or userinput != 3:
-        if userinput == '1': 
-            for i in range(0,5):
-                board.append(["O"]*5)
-        if userinput == '2':
-            for i in range(0,10):
-                board.append(["O"]*5)
-        if userinput == '3':
-            for i in range():
-                pass                                
-def fields_output():
->>>>>>> 1ee8b5dd53ffc21df43ece3877e967c2fd599dde
     pass
 
 def change_player():
