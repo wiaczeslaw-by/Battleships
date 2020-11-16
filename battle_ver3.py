@@ -1,4 +1,5 @@
 import os
+import random
 def game_mode():
     print("""Please chose game mode :
                 1 - Player vs Player
@@ -38,15 +39,19 @@ def check_fit (board_size, ship_size, user_row, user_column, ship_orientation):
                 return False                
 
 def check_correct_positon (board, ship_size, user_row, user_column, ship_orientation):
-                  
+    """ sprawdza czy statek może zostac umieszczony na podanej pozycji. Warunke to puste miejsca
+    przeznaczone na statek oraz puste pola sąsiadujące. Puste oznacza wartość "0" """              
     for row in range(user_row - 1, user_row + 2):        
         for column in range (user_column -1, user_column + ship_size + 1):
             try :
-                if board[row][column] == "0":
+                if row < 0 or column < 0:
                     pass
-                else:
-                    return False
-                    break
+                else :
+                    if board[row][column] == "0":
+                        pass
+                    else:
+                        return False
+                        break
             except IndexError:
                 continue
     return True
@@ -71,7 +76,7 @@ def show_board(board, board_size):
 
 def get_ship_orientation() :
     print(""" Chose ship orientation :
-                1. Horizonatl
+                1. Horizonatal
                 2. Vertical        
             """)
     ship_orientation = input("Your choice is (1 or 2):")
@@ -86,14 +91,15 @@ def get_ship_orientation() :
 
 
 def get_ship_coridnates():
-
     print("""Chose ship`s position (first field).
             Row - (from A to E)
             Column (from 1 to 5))
+            Enter the row first :
             """)
-    ship_cordinates = input()
-    user_row = int(replace_letter_to_number(ship_cordinates[0].lower()))
-    user_column = int(ship_cordinates[1])-1
+    user_row_letter = input("Enter the row first :")
+    user_row = int(ord(user_row_letter.lower())- 97)
+    
+    user_column = int(input("Enter the column now :"))-1
     return user_row, user_column
 
 def mark_ships(board, ship_size, ship_orientation, user_row, user_column):
@@ -104,29 +110,6 @@ def mark_ships(board, ship_size, ship_orientation, user_row, user_column):
         for row in range(user_row, user_row + ship_size):
             board[row][user_column] = "S"
 
-def replace_letter_to_number(letter):
-
-    if letter == "a":
-        return 0
-    if letter == "b":
-        return 1
-    if letter == "c":
-        return 2
-    if letter == "d":
-        return 3
-    if letter == "e":
-        return 4
-    if letter == "f":
-        return 5
-    if letter == "g":
-        return 6
-    if letter == "h":
-        return 7
-    if letter == "i":
-        return 8
-    if letter == "j":
-        return 9
-        
 def set_ships(ship_list,board):
     
     for ship in range (len(ship_list)):
@@ -138,19 +121,32 @@ def set_ships(ship_list,board):
             ship_size = ship_list[ship]        
             ship_orientation = get_ship_orientation()
             user_row, user_column = get_ship_coridnates()
-            if check_correct_positon(board, ship_size, user_row, user_column, ship_orientation) is True:
+            if check_correct_positon(board, ship_size, user_row, user_column, ship_orientation) is True and check_fit(board_size,ship_size,user_row,user_column,ship_orientation):
                 mark_ships(board, ship_size, ship_orientation, user_row, user_column)
                 completed_ship = True
             else:
                 print("You cant put ship here. Try again")
         show_board(board, board_size)  
 
+def random_set_ships(ship_list,board):
+    for ship in range (len(ship_list)):
+        completed_ship = False
+        while completed_ship == False:
+            ship_size = ship_list[ship]
+            ship_orientation, user_row, user_column = random_ship_cordinates(board_size)
+            if check_correct_positon(board, ship_size, user_row, user_column, ship_orientation) is True and check_fit(board_size,ship_size,user_row,user_column,ship_orientation):
+                mark_ships(board, ship_size, ship_orientation, user_row, user_column)
+                completed_ship = True
+            else:
+                pass
+
+
 def two_boards (board, board_1, board_size):
     print("  ",end ="")
     for number in range (1,board_size+1):
         print(number,end=" ")
     print("      ",end="")
-    for number in range (0,board_size):
+    for number in range (1,board_size+1):
         print(number,end=" ")
 
     for row in range(0,board_size):
@@ -164,7 +160,18 @@ def two_boards (board, board_1, board_size):
         for column in range(0,board_size):
             print(board_1[row][column], end=" ")
     print()
-     
+
+def random_ship_cordinates(board_size):
+    ship_orientation = random.randint(1,2)
+    if ship_orientation == 1:
+        ship_orientation = "horizontal"
+    else :
+        ship_orientation = "vertical"
+    #print(ship_orientation)
+    random_row = random.randint(0,board_size - 1)
+    random_column = random.randint(0,board_size - 1)
+    #print(random_row,",",random_column)
+    return ship_orientation, random_row, random_column
 
 board = []
 board_1 = []
@@ -185,7 +192,8 @@ elif board_size == 10:
 else:
     ship_list = ship_10_10
 
-set_ships(ship_list, board)
-
-set_ships(ship_list, board_1)
+#set_ships(ship_list, board)
+#set_ships(ship_list, board_1)
+random_set_ships(ship_list, board)
+random_set_ships(ship_list, board_1)
 two_boards(board, board_1,board_size)
