@@ -16,12 +16,12 @@ def main():
     board, chosen_set_of_ships = board_size(board)
     print_board(board)
     print(chosen_set_of_ships)
-    print(board)
+    print_board(board)
     random_ship_placement(board)
     print_board(board) 
 
 def choose_game_mode():
-    user_game_mode = input("Please, choose game mode:\n 1 - Player vs Player\n 2 - Player vs Comp ")
+    user_game_mode = input("Please, choose game mode:\n 1 - Player vs Player\n 2 - Player vs Comp \n")
     if user_game_mode == '1':
         player = 1
         return player
@@ -37,10 +37,11 @@ def choose_game_mode():
 
 def board_size(board):                            # function for choosing board size and ship_set according to it
     os.system("cls || clear")  
-    userinput = input("Please, choose board size:\n 1 - small (5*5)\n 2 - regular (10*10)\n 3 - big (15*15)")
+    userinput = input("Please, choose board size:\n 1 - small (5*5)\n 2 - regular (10*10)\n 3 - big (15*15)\n")
+    cell = {"symbol" : "O", "status" : "inactive"}
     if userinput == '1': 
         for row in range(0, 5):
-            cell = {"symbol" : "O", "status" : "inactive"}
+            
             board = add_objects_to_list(board, 5, cell, row)
             if row < 4:
                 board.append([])
@@ -71,7 +72,7 @@ def board_size(board):                            # function for choosing board 
     else:
         print("Input correct data")
         time.sleep(2)
-        # board = board_size(board, cell)
+        board, chosen_set_of_ships = board_size(board)
     return board, chosen_set_of_ships 
 
 def add_objects_to_list(board, size, user_object, row):
@@ -92,7 +93,14 @@ def add_objects_to_list(board, size, user_object, row):
                                 
 
 def print_board(board):
-    for row in range(len(board)): 
+    print("  ",end ="")
+    for number in range (1,len(board) + 1):
+        print(number,end=" ")
+    print()
+    for row in range(len(board)):
+        ascii_letter = 65 + row
+        #print()
+        print(chr(ascii_letter),end = " ")         
         for cell in board[row]:
             print(get_object_value(cell, "symbol"), end = " ")
         print()
@@ -129,7 +137,7 @@ def random_ship_placement(board):
             else:
                 board[random_column][random_row] = 'S'
                 chosen_set_of_ships.pop(0)
-    print(board)
+    print_board(board)
     return board
 
 def set_object_value(cell, index, value):

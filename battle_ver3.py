@@ -272,7 +272,7 @@ def give_a_shot(player,sequence):
         print(f"Now {player}")
         if game_mode == "1":
             user_shot_row, user_shot_column = get_shot_coridnates(board_displayed)
-        elif game_mode == "2" and sequence % 2 == 0:
+        if game_mode == "2" and sequence % 2 == 0:
             user_shot_row, user_shot_column = get_shot_coridnates(board_displayed)
         else :            
             user_shot_row, user_shot_column = random_shot_coordinates(board_size,board_displayed)
@@ -307,7 +307,7 @@ def has_won(board):
             if board[row][column] == "S":
                 count_s_element += 1
     if len(board) == 7:
-        if count_s_element == 5:        
+        if count == 5:        
             return True
         else:   
             return False
